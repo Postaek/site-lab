@@ -1,0 +1,88 @@
+﻿@using System.Security.Claims
+
+@{
+    var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
+
+@model List<site.Models.Article>
+@using System.Linq
+
+<!-- 🔥 HERO -->
+<div class="p-5 mb-4 bg-dark text-white rounded">
+    <div class="container">
+        <h1 class="display-5">🔥 Мой блог</h1>
+        <p class="lead">Здесь я публикую статьи, мысли и идеи</p>
+        <a href="/Article/Create" class="btn btn-warning">Написать статью</a>
+    </div>
+</div>
+
+<h2 class="mb-4 mt-5">📚 Последние статьи</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4 border-0 hover-shadow">
+                    <div class="card-body">
+
+                        <!-- 🔥 КЛИКАБЕЛЬНАЯ ОБЛАСТЬ -->
+                        <a href="/Article/Details/@item.Id" style="text-decoration:none; color:black;">
+                            <h5 class="card-title fw-bold">@item.Title</h5>
+
+                            <p class="card-text text-muted">
+                                @(item.Content.Length > 120
+                                                        ? item.Content.Substring(0, 120) + "..."
+                                                        : item.Content)
+                    </p>
+                </a>
+
+                        <!-- 🔥 КНОПКИ -->
+                        <div class="d-flex justify-content-between mt-3">
+                            <span class="text-primary">Читать →</span>
+
+                    @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (User.Identity.IsAuthenticated &&
+                                                    (User.IsInRole("Admin") || item.UserId == currentUserId))
+                                {
+                                    <button class="btn btn-sm btn-danger delete-btn" data-id="@item.Id">
+                                        Удалить
+                                    </button>
+                                }
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Нет статей 😢
+    </div>
+}
+
+<!-- 🔥 AJAX -->
+<script>
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+
+            if (!confirm("Удалить статью?")) return;
+
+            fetch(`/Article/Delete/${id}`, {
+                method: "POST"
+            })
+            .then(res => {
+                if (res.ok) {
+                    this.closest(".col-md-4").remove();
+                }
+            });
+        });
+    });
+</script>

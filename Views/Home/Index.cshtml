@@ -1,0 +1,28 @@
+﻿@model List<site.Models.Article>
+
+<h2 class="mb-4">📚 Статьи</h2>
+
+<a href="/Article/Create" class="btn btn-primary mb-3">➕ Добавить статью</a>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Content</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Нет статей 😢
+    </div>
+}
