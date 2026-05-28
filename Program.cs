@@ -39,11 +39,6 @@ app.UseRouting();
 // 🔥 ВАЖНЫЙ ПОРЯДОК
 app.UseAuthentication();
 
-app.Use(async (context, next) =>
-{
-    await context.SignOutAsync();
-    await next();
-});
 app.UseAuthorization();
 
 // 🔥 Маршруты

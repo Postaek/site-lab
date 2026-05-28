@@ -262,3 +262,4 @@ C:\Users\Ефим\source\repos\site\site\bin\Debug\net8.0\Microsoft.AspNetCore.I
 C:\Users\Ефим\source\repos\site\site\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\Ефим\source\repos\site\site\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Ефим\source\repos\site\site\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Ефим\source\repos\site\site\obj\Debug\net8.0\site.sourcelink.json
